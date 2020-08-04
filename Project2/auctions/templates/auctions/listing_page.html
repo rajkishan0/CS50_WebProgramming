@@ -1,0 +1,78 @@
+{% extends "auctions/layout.html" %}
+{% block title %}
+
+	Auctions - {{listing.title}}
+
+{% endblock title %}
+
+{% block body %}
+	<div class="mx-5 my-3 text-center">
+		<div class="card w-75 justify-content-center mx-auto">
+			<img class="card-img-top" style="height: 60vh" src="{{listing.image_url}}" alt="Card image cap">
+			<div class="card-body">
+				<h1 class="card-title text-center">{{listing.title}}</h1>
+				<p class="card-text">{{listing.description}}</p>
+			<div class="d-flex justify-content-around mt-3">
+				<span><strong>Current Bid: </strong> ${{current_bid.bid}} </span>
+				<span><strong>Number of Bids: </strong> {{ number_bids }}</span>
+				<span><strong>Bid held by: </strong> {{current_bid.user.username}}</span>
+			</div>
+			<div class="d-flex justify-content-around mt-3">
+				<span><strong>Starting Bid:</strong> ${{listing.starting_bid}} </span>
+				<span><strong>Started by:</strong> {{ username }}</span>
+				<span><strong>Category: </strong> {{listing.category}}</span>
+			</div>
+			<br>
+			{% if user.is_authenticated %}
+				{% if message %}
+					<h5 class="text-danger"> {{message}} </h5>
+				{% endif %}
+				{% if not active %}
+					<h3 class="text-primary"> This auction has been closed! <strong>{{current_bid.user.username}}</strong> has won! </h3>
+				{% endif %}
+				{% if active %}
+					<h3 class="mb-n2"> Bid </h3>
+					<p class="text-muted"> Bid must be greater than current bid. </p>
+					<form acions="{% url 'bid' listing.id %}" method="post" class="mb-4 mt-n1">
+				    	{% csrf_token %}
+						<input type="number" name="bid" placeholder="Bid in $">
+				    	<br>
+			    		<input class="btn btn-primary mt-2 justify-content-center" type="submit" name="bid_submit">
+			    	</form>
+		    	{% endif %}
+				<h3 class="mb-n2"> Leave a comment </h3>
+				<p class="text-muted"> Max Characters: 300 </p>
+				<form acions="{% url 'create' %}" method="post" class="mb-5 mt-n1">
+			    	{% csrf_token %}
+					<textarea class="w-75" style="height: 25vh" name="body"> </textarea>
+			    	<br>
+		    		<input class="btn btn-primary mt-2 justify-content-center" type="submit" name="comment_submit">
+		    	</form>
+		    	<div class="d-flex justify-content-around mx-5">
+		    		{% if active %}
+						{% if on_watchlist%}
+							<a href="{% url 'watchlist_remove' listing.id %}" class="btn btn-primary text-center justify-content-center mx-auto">Remove from Watchlist</a>
+						{% else %}
+							<a href="{% url 'watchlist_add' listing.id %}" class="btn btn-primary text-center justify-content-center mx-auto">Add to Watchlist</a>
+						{% endif %}
+					{% endif %}
+					{% if started_listing and active%}
+						<a href="{% url 'close' listing.id %}" class="btn btn-primary text-center justify-content-center mx-auto">Close Auction</a>
+					{% endif %}
+				</div>
+			{% endif %}
+			</div>
+		</div>
+		<div class="comment-section my-4">
+			{% for comment in comments %}
+				<div class="card w-75 justify-content-center mx-auto text-left mt-2">
+					<div class="card-body">
+						<p class="card-title"><strong> By {{comment.user}} on {{comment.date}} </strong></p>
+						<hr>
+						{{comment.body}}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

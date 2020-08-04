@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+{% block title %}
+
+	Auctions - Home
+
+{% endblock title %}
+
+{% block body %}
+    <h2 class="ml-5 mb-4">Active Listings</h2>
+	<div class="mx-5 text-left">
+		<div class="row mb-3">
+			{% for listing in listings %}
+			<div class="col-4 mb-4">
+				<div class="card" style="">
+					<img class="card-img-top h-100" src="{{listing.image_url}}" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title text-center">{{listing.title}}</h5>
+						<p class="card-text">{{listing.description|slice:":150"}}...</p>
+						<p class="card-text"> <strong> Current Price </strong>: ${{listing.current_bid}} </p>
+						<div class="text-center">
+							<a href="{% url 'listing_page' listing.id %}" class="btn btn-primary text-center justify-content-center mx-auto">See Listing</a>
+						</div>
+					</div>
+				</div>	
+			</div>
+			{% empty %}
+				<p> There are currently no listings. </p>
+			{% endfor %}
+		</div>
+		<br>
+		<br>
+	</div>
+{% endblock %}
