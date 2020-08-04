@@ -1,0 +1,53 @@
+body{
+font-family: arial,sans-serif;
+  height:100%;
+  display: block;
+}
+.container
+{
+  width: 45%;
+  margin:auto;
+  overflow: hidden;
+  padding:150px;
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+
+
+}
+
+#data{
+
+  background-image: url('searchicon.png');
+  border-radius: 25px;
+  border: 1px solid #d6d3c7 ;
+   width: 90%;
+   padding: 10px;
+
+}
+.button
+{
+  border:none;
+  padding:10px;
+  color:#66696e;
+  margin-right:7px
+
+
+}
+#hey:focus{
+  outline: none;
+
+}
+header{
+  background-color:white;
+  background-size: cover;
+  background-position:right;
+  height: 50px;
+}
+a{
+  float:right;
+  margin:5px;
+}
+.button:focus{
+  outline:none;
+}
