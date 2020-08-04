@@ -1,0 +1,19 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{ title_name }} - WIKIPedia
+{% endblock %}
+
+{% block body %}
+<h1> {{title_name}} - WIKIPedia</h1>
+
+    <div >
+
+
+        {{ title|safe }}
+
+    </div>
+
+</br>
+<a href="{% url 'edit' title_name %} "> Edit {{ title_name }} Entry</a>
+{% endblock %}
